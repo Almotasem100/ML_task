@@ -49,6 +49,9 @@ X = data[:, :-1]
 X = (X -np.mean(X))/np.std(X)
 y = data[:, -1].reshape(-1,1)
 h, theta = fit(X, y, 0.0001, 10000)
-accuracy = EvaluatePerformance(X, y, theta)
-print(accuracy)
+accuracy = EvaluatePerformance(X[11:13], y[11:13], theta)
+print("results of Multivariate data using random index:")
+print('y example:\n', y[11:13])
+print('y prdection:\n', h[11:13])
+print("accuarcy:", accuracy, '%')
 
