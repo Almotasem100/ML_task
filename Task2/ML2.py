@@ -44,13 +44,17 @@ def fit(X, y, alpha=0.01, num_iter=100):
 
 
 # data = np.loadtxt('univariateData.dat', delimiter=',')
-data = np.loadtxt('multivariateData.dat', delimiter=',') #For multivariate
-X = data[:, :-1]
-X = (X -np.mean(X))/np.std(X)
-y = data[:, -1].reshape(-1,1)
-h, theta = fit(X, y, 0.0001, 10000)
+# data = np.loadtxt('multivariateData.dat', delimiter=',') #For multivariate
+# X = data[:, :-1]
+# X = (X -np.mean(X))/np.std(X)
+# y = data[:, -1].reshape(-1,1)
+X = np.array([i for i in range(50)]).reshape(-1,1)
+y = np.array([3*i-5 for i in range(50)]).reshape(-1,1)
+# print(X[0:5], y[0:5])
+h, theta = fit(X, y, 0.001, 100000)
 accuracy = EvaluatePerformance(X[11:13], y[11:13], theta)
 print("results of Multivariate data using random index:")
+print('theta', theta)
 print('y example:\n', y[11:13])
 print('y prdection:\n', h[11:13])
 print("accuarcy:", accuracy, '%')
