@@ -6,11 +6,11 @@ import pandas as pd
 import numpy as np
 
 
-# Split a dataset based on an attribute and an attribute value
+# Split a datasetinto two branches based on an attribute and an attribute value
 def test_split(index, value, dataset):
 	left, right = list(), list()
 	for row in dataset:
-		if row[index] < value:
+		if row[index] < value: 
 			left.append(row)
 		else:
 			right.append(row)
@@ -18,25 +18,21 @@ def test_split(index, value, dataset):
 
 # Calculate the Gini index for a split dataset
 def gini_index(groups, classes):
-	# count all samples at split point
 	n_instances = float(sum([len(group) for group in groups]))
-	# sum weighted Gini index for each group
 	gini = 0.0
 	for group in groups:
 		size = float(len(group))
-		# avoid divide by zero
 		if size == 0:
 			continue
 		score = 0.0
-		# score the group based on the score for each class
 		for class_val in classes:
 			p = [row[-1] for row in group].count(class_val) / size
 			score += p * p
-		# weight the group score by its relative size
 		gini += (1.0 - score) * (size / n_instances)
 	return gini
 
-# Select the best split point for a dataset
+# Select the best split point for a dataset according to the one 
+# 	acheiving the least gini value
 def get_split(dataset):
 	class_values = list(set(row[-1] for row in dataset))
 	b_index, b_value, b_score, b_groups = 999, 999, 999, None
@@ -49,11 +45,15 @@ def get_split(dataset):
 	return {'index':b_index, 'value':b_value, 'groups':b_groups}
 
 # Create a terminal node value
+# at which the resulted two sets will be considered the leafs
+# upon which the classification decision will be made
 def to_terminal(group):
 	outcomes = [row[-1] for row in group]
 	return max(set(outcomes), key=outcomes.count)
 
+
 # Create child splits for a node or make terminal
+# inorderto build a tree 
 def split(node, max_depth, min_size, depth):
 	left, right = node['groups']
 	del(node['groups'])
